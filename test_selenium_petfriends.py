@@ -17,13 +17,11 @@ def test_petfriends():
 
   # click on the new user button
   btn_newuser = driver.find_element_by_xpath("//button[@onclick=\"document.location='/new_user';\"]")
-
   btn_newuser.click()
     
   # click existing user button
   btn_exist_acc = driver.find_element_by_link_text(u"У меня уже есть аккаунт")
   btn_exist_acc.click()
-
 
   # add email
   field_email = driver.find_element_by_id("email")
@@ -39,10 +37,9 @@ def test_petfriends():
   btn_submit = driver.find_element_by_xpath("//button[@type='submit']")
   btn_submit.click()
 
-
   time.sleep(5)  # just for demo purposes, do NOT repeat it on real projects!
   if driver.current_url == 'https://petfriends1.herokuapp.com/all_pets':
-    # Make the screenshot of browser window:
     driver.save_screenshot('result_petfriends.png')
+    
   else:
     raise Exception("login error")
