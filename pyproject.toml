@@ -7,6 +7,8 @@ authors = ["jabooticaba <<>>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 selenium = "^3.141.0"
+pytest = "^6.2.4"
+pytest-selenium = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 

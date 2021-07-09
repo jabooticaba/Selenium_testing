@@ -15,25 +15,27 @@ chrome_options.add_argument('--disable-dev-shm-usage')
 
 def test_search_example():
   driver = webdriver.Chrome(options=chrome_options)
+  driver.set_window_size(800, 600)
+  driver.maximize_window()
   driver.get("https://google.com")
 
-  time.sleep(5)  # just for demo purposes, do NOT repeat it on real projects!
+  time.sleep(1)  # just for demo purposes, do NOT repeat it on real projects!
 
-    # Find the field for search text input:
+  # Find the field for search text input:
   search_input = driver.find_element_by_name('q')
 
 
-    # Enter the text for search:
+  # Enter the text for search:
   search_input.clear()
   search_input.send_keys('first test')
 
-  time.sleep(5)  # just for demo purposes, do NOT repeat it on real projects!
+  time.sleep(1)  # just for demo purposes, do NOT repeat it on real projects!
 
-    # Click Search:
+  # Click Search:
   search_button = driver.find_element_by_name('btnK')
   search_button.submit()
 
-  time.sleep(5)  # just for demo purposes, do NOT repeat it on real projects!
+  time.sleep(1)  # just for demo purposes, do NOT repeat it on real projects!
 
-    # Make the screenshot of browser window:
+  # Make the screenshot of browser window:
   driver.save_screenshot('result.png')
