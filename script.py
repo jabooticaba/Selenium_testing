@@ -1,6 +1,4 @@
 # pytest -v --driver Chrome --driver-path /path/to//chromedriver.exe
-# pytest -v --driver Chrome --driver-path Selenium_testing/webdriver/chrome/chromedriver.exe
-# pytest -v --driver Chrome --driver-path C:\chromesetup\chromedriver.exe
 # Chrome(executable_path='/webdriver/chrome/chromedriver')
 
 from selenium import webdriver
@@ -38,4 +36,4 @@ def test_search_example():
   time.sleep(1)  # just for demo purposes, do NOT repeat it on real projects!
 
   # Make the screenshot of browser window:
-  driver.save_screenshot('result.png')
+  driver.save_screenshot('test_search_example_result.png')
