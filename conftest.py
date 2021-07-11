@@ -1,6 +1,5 @@
 import pytest
 import uuid
-import json
 
 @pytest.fixture
 def chrome_options(chrome_options):
