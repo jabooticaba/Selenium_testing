@@ -44,11 +44,11 @@ def testing():
 
 
 def test_show_my_pets():
-    # Вводим email
+    # add email
     pytest.driver.find_element_by_id('email').send_keys('test123@yandex.ru')
-    # Вводим пароль
+    # add password
     pytest.driver.find_element_by_id('pass').send_keys('123456')
-    # Нажимаем на кнопку входа в аккаунт
+    # click submit button
     pytest.driver.find_element_by_css_selector('button[type="submit"]').click()
     # Проверяем, что мы оказались на главной странице пользователя
     assert pytest.driver.find_element_by_tag_name('h1').text == "PetFriends"
