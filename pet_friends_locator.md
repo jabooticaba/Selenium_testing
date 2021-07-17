@@ -1,9 +1,11 @@
+Locators for http://petfriends1.herokuapp.com/all_pets
+
 Element      | CSS          | XPath
 -------------|--------------|-------------
 Header |.navbar-light | /html//nav
 Header logo | a.header2 | //nav/a[@href="/"]
-Navigation bar items | 1. a.nav-link[href="/my_pets"] | //nav/a[@href="/my_pets"]
- _ | 2. a.nav-link[href="/all_pets"] | //nav/a[@href="/all_pets"]
+Navigation bar items | 1. a.nav-link[href="/my_pets"] | //li/a[@href="/my_pets"]
+ _ | 2. a.nav-link[href="/all_pets"] | //li/a[@href="/all_pets"]
 "Exit" button | .btn-outline-secondary | //div/button[contains(@class, "btn-outline-secondary")]
 Title | head > title | //head/title
 Pet card | .card-deck > .card | //div[@class="card"]
