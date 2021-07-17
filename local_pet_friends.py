@@ -33,21 +33,44 @@ def test_petfriends(web_browser):
 
 @pytest.fixture(autouse=True)
 def testing():
-   pytest.driver = webdriver.Chrome('./webdriver/chrome/chromedriver.exe')
-   # Переходим на страницу авторизации
-   pytest.driver.get('http://petfriends1.herokuapp.com/login')
+    pytest.driver = webdriver.Chrome('./webdriver/chrome/chromedriver.exe')
+    pytest.driver.maximize_window()
+    # Переходим на страницу авторизации
+    pytest.driver.get('http://petfriends1.herokuapp.com/login')
 
-   yield
+    yield
 
-   pytest.driver.quit()
+    pytest.driver.quit()
 
 
 def test_show_my_pets():
-   # Вводим email
-   pytest.driver.find_element_by_id('email').send_keys('vasya@mail.com')
-   # Вводим пароль
-   pytest.driver.find_element_by_id('pass').send_keys('12345')
-   # Нажимаем на кнопку входа в аккаунт
-   pytest.driver.find_element_by_css_selector('button[type="submit"]').click()
-   # Проверяем, что мы оказались на главной странице пользователя
-   assert pytest.driver.find_element_by_tag_name('h1').text == "PetFriends"
+    # Вводим email
+    pytest.driver.find_element_by_id('email').send_keys('test123@yandex.ru')
+    # Вводим пароль
+    pytest.driver.find_element_by_id('pass').send_keys('123456')
+    # Нажимаем на кнопку входа в аккаунт
+    pytest.driver.find_element_by_css_selector('button[type="submit"]').click()
+    # Проверяем, что мы оказались на главной странице пользователя
+    assert pytest.driver.find_element_by_tag_name('h1').text == "PetFriends"
+    # Переходим на страницу /my_pets
+    pytest.driver.find_element_by_xpath('//li/a[@href="/my_pets"]').click()
+    # Проверка тайтла страницы /my_pets
+    assert pytest.driver.title == "PetFriends: My Pets"
+
+    # сбор значений проверяемых элементов
+    images = pytest.driver.find_elements_by_css_selector("tbody tr th")
+    names = pytest.driver.find_elements_by_xpath("//div[@id='all_my_pets']/table/tbody/tr/td[1]")
+    breeds = pytest.driver.find_elements_by_xpath("//div[@id='all_my_pets']/table/tbody/tr/td[2]")
+    ages = pytest.driver.find_elements_by_xpath("//div[@id='all_my_pets']/table/tbody/tr/td[3]")
+    descriptions = pytest.driver.find_elements_by_css_selector('.card-deck .card-img-top')
+
+    for i in range(len(names)):
+        assert images[i].get_attribute('src') != ''
+        assert names[i].text != ''
+        assert breeds[i].text != ''
+        assert ages[i].text != ''
+        # assert descriptions[i].text != ''
+        # assert ', ' in descriptions[i]
+        # parts = descriptions[i].text.split(", ")
+        # assert len(parts[0]) > 0
+        # assert len(parts[1]) > 0
