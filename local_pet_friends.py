@@ -56,6 +56,8 @@ def test_show_my_pets():
     pytest.driver.find_element_by_xpath('//li/a[@href="/my_pets"]').click()
     # Проверка тайтла страницы /my_pets
     assert pytest.driver.title == "PetFriends: My Pets"
+    title = pytest.driver.find_element_by_css_selector('head title')
+    assert title.get_attribute("innerText") == "PetFriends: My Pets"
 
     # сбор значений проверяемых элементов
     images = pytest.driver.find_elements_by_css_selector("tbody tr th")
