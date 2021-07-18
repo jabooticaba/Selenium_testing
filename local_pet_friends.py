@@ -1,3 +1,5 @@
+# coding=UTF-8
+
 import time
 import pytest
 from selenium import webdriver
@@ -42,7 +44,7 @@ def testing():
 
     pytest.driver.quit()
 
-
+@pytest.mark.current
 def test_show_my_pets():
     # add email
     pytest.driver.find_element_by_id('email').send_keys('test123@yandex.ru')
