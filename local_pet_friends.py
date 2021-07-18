@@ -64,15 +64,17 @@ def test_show_my_pets():
     names = pytest.driver.find_elements_by_xpath("//div[@id='all_my_pets']/table/tbody/tr/td[1]")
     breeds = pytest.driver.find_elements_by_xpath("//div[@id='all_my_pets']/table/tbody/tr/td[2]")
     ages = pytest.driver.find_elements_by_xpath("//div[@id='all_my_pets']/table/tbody/tr/td[3]")
-    descriptions = pytest.driver.find_elements_by_css_selector('.card-deck .card-img-top')
 
     for i in range(len(names)):
         assert images[i].get_attribute('src') != ''
         assert names[i].text != ''
         assert breeds[i].text != ''
         assert ages[i].text != ''
-        # assert descriptions[i].text != ''
-        # assert ', ' in descriptions[i]
-        # parts = descriptions[i].text.split(", ")
-        # assert len(parts[0]) > 0
-        # assert len(parts[1]) > 0
+
+    #assertion of pet number in statistics frame and number of pet cards
+    pet_number = len(pytest.driver.find_elements_by_css_selector("table.table-hover tbody > tr"))
+    pet_number_stat = pytest.driver.find_elements_by_xpath("/html/body/div[1]//div[@class='.col-sm-4 left']")
+    # for i in (pet_number_stat):
+    #     print(i.text)
+    assert (str(pet_number_stat[0].text.split("\n")[1].split(" ")[1])) == pet_number
+
