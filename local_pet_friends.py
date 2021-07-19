@@ -73,12 +73,13 @@ def test_show_my_pets():
 
     images_counter = 0
     names_set = set()
-    pets_list = []
+    pets_list = set()
     for i in range(pet_number):
-        pet = []
-        pet.append(names[i].text), pet.append(breeds[i].text), pet.append(ages[i].text)
-
+        
         names_set.add(names[i].text)
+        pet = (names[i].text, breeds[i].text, ages[i].text)
+        pets_list.add(pet)
+        
         if images[i].get_attribute('src') != '':
             images_counter +=1
         # assert images[i].get_attribute('src') != '' #TODO Need to add soft assert
@@ -86,8 +87,26 @@ def test_show_my_pets():
         assert breeds[i].text != ''
         assert ages[i].text != ''
 
-        if pet not in pets_list:
-            pets_list.append(pet)
+        
+    
+    
+#     images_counter = 0
+#     names_set = set()
+#     pets_list = []
+#     for i in range(pet_number):
+#         pet = []
+#         pet.append(names[i].text), pet.append(breeds[i].text), pet.append(ages[i].text)
+
+#         names_set.add(names[i].text)
+#         if images[i].get_attribute('src') != '':
+#             images_counter +=1
+#         # assert images[i].get_attribute('src') != '' #TODO Need to add soft assert
+#         assert names[i].text != ''
+#         assert breeds[i].text != ''
+#         assert ages[i].text != ''
+
+#         if pet not in pets_list:
+#             pets_list.append(pet)
 
     # assertion of pet number in statistics frame and number of pet cards
     pet_number_stat = pytest.driver.find_elements_by_xpath("/html/body/div[1]//div[@class='.col-sm-4 left']")
