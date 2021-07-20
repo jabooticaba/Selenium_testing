@@ -1,25 +1,11 @@
 # coding=UTF-8
 
-import pytest
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+
 from delayed_assert import expect, assert_expectations
+
 import time
 
 
-@pytest.fixture(autouse=True)
-def testing():
-    chrome_options = Options()
-    chrome_options.headless = True
-    chrome_options.add_argument("--window-size=1280,800")
-    driver = webdriver.Chrome('./webdriver/chrome/chromedriver.exe', options=chrome_options)
-    driver.implicitly_wait(10)
-    # go to auth page
-    driver.get('http://petfriends1.herokuapp.com/login')
-
-    yield driver
-
-    driver.quit()
 
 
 def test_show_my_pets(testing):
@@ -71,38 +57,7 @@ def test_show_my_pets(testing):
 
     # all pets has different names
     expect(len(names) == len(names_set), 'Match of pet names')
-
     # all pets has different set of name, breed and age
     expect(pet_number == len(pets_list), 'Not all of pets has different set of name, breed and age')
 
     assert_expectations()
-
-
-
-def test_petfriends(web_browser):
-    web_browser.get("https://petfriends1.herokuapp.com/")
-
-    # click on the new user button
-    btn_newuser = web_browser.find_element_by_xpath("//button[@onclick=\"document.location='/new_user';\"]")
-    btn_newuser.click()
-
-    # click existing user button
-    btn_exist_acc = web_browser.find_element_by_link_text(u"У меня уже есть аккаунт")
-    btn_exist_acc.click()
-
-    # add email
-    field_email = web_browser.find_element_by_id("email")
-    field_email.clear()
-    field_email.send_keys("<your_email>")
-
-    # add password
-    field_pass = web_browser.find_element_by_id("pass")
-    field_pass.clear()
-    field_pass.send_keys("<your_password>")
-
-    # click submit button
-    btn_submit = web_browser.find_element_by_xpath("//button[@type='submit']")
-    btn_submit.click()
-
-    # time.sleep(4)  # just for demo purposes, do NOT repeat it on real projects!
-    assert web_browser.current_url == 'https://petfriends1.herokuapp.com/all_pets',"login error"
