@@ -1,11 +1,7 @@
 # coding=UTF-8
 
-
 from delayed_assert import expect, assert_expectations
-
 import time
-
-
 
 
 def test_show_my_pets(testing):
