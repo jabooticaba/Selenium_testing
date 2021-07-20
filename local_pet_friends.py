@@ -1,9 +1,11 @@
 # coding=UTF-8
 
-import time
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from delayed_assert import expect, assert_expectations
+import time
+
 
 def test_petfriends(web_browser):
     web_browser.get("https://petfriends1.herokuapp.com/")
@@ -82,42 +84,23 @@ def test_show_my_pets():
         
         if images[i].get_attribute('src') != '':
             images_counter +=1
-        # assert images[i].get_attribute('src') != '' #TODO Need to add soft assert
-        assert names[i].text != ''
-        assert breeds[i].text != ''
-        assert ages[i].text != ''
+        expect(images[i].get_attribute('src') != '', 'Pet has no picture')
+        expect(names[i].text != '', 'Empty name field')
+        expect(breeds[i].text != '', 'Empty name field')
+        expect(ages[i].text != '', 'Empty age field')
 
-        
-    
-    
-#     images_counter = 0
-#     names_set = set()
-#     pets_list = []
-#     for i in range(pet_number):
-#         pet = []
-#         pet.append(names[i].text), pet.append(breeds[i].text), pet.append(ages[i].text)
-
-#         names_set.add(names[i].text)
-#         if images[i].get_attribute('src') != '':
-#             images_counter +=1
-#         # assert images[i].get_attribute('src') != '' #TODO Need to add soft assert
-#         assert names[i].text != ''
-#         assert breeds[i].text != ''
-#         assert ages[i].text != ''
-
-#         if pet not in pets_list:
-#             pets_list.append(pet)
-
-    # assertion of pet number in statistics frame and number of pet cards
+    # all pets are displayed on the page
     pet_number_stat = pytest.driver.find_elements_by_xpath("/html/body/div[1]//div[@class='.col-sm-4 left']")
-    assert (int(pet_number_stat[0].text.split("\n")[1].split(" ")[1])) == pet_number
+    expect((int(pet_number_stat[0].text.split("\n")[1].split(" ")[1])) == pet_number, 'Not all pets are displayed on '
+                                                                                      'the page')
 
     # More then a half of pets has photo number
-    assert images_counter >= pet_number / 2
+    expect(images_counter >= pet_number / 2, 'Less then a half of pets has photo number')
 
     # all pets has different names
-    assert len(names) == len(names_set)
+    expect(len(names) == len(names_set), 'Match of pet names')
 
-    # all pets are different
-    assert pet_number == len(pets_list)
+    # all pets has different set of name, breed and age
+    expect(pet_number == len(pets_list), 'Not all of pets has different set of name, breed and age')
 
+    assert_expectations()
