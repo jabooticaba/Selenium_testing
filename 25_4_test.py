@@ -1,8 +1,9 @@
 # coding=UTF-8
 
 from delayed_assert import expect, assert_expectations
-import time
-
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 def test_show_my_pets(testing):
     # add email
@@ -11,16 +12,20 @@ def test_show_my_pets(testing):
     testing.find_element_by_id('pass').send_keys('123456')
     # click submit button
     testing.find_element_by_css_selector('button[type="submit"]').click()
+
     # user main page check
-    assert testing.find_element_by_tag_name('h1').text == "PetFriends"
+    WebDriverWait(testing, 5).until(EC.text_to_be_present_in_element((By.TAG_NAME, "h1"), 'PetFriends'))  # assert testing.find_element_by_tag_name('h1').text == "PetFriends"
+
     # go to /my_pets
+    WebDriverWait(testing, 10).until(EC.element_to_be_clickable((By.XPATH, '//li/a[@href="/my_pets"]')))
     testing.find_element_by_xpath('//li/a[@href="/my_pets"]').click()
     # /my_pets-title check
-    assert testing.title == "PetFriends: My Pets"
-    title = testing.find_element_by_css_selector('head title')
-    assert title.get_attribute("innerText") == "PetFriends: My Pets"
+    assert testing.title == "PetFriends: My Pets"  # an alternative method below
+    # title = testing.find_element_by_css_selector('head title')
+    # assert title.get_attribute("innerText") == "PetFriends: My Pets"
 
     # сбор значений проверяемых элементов
+    WebDriverWait(testing, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "table.table-hover tbody > tr"))) # waiting for pets table visibility
     pet_number = len(testing.find_elements_by_css_selector("table.table-hover tbody > tr"))
     images = testing.find_elements_by_css_selector("tbody tr th img")
     names = testing.find_elements_by_xpath("//div[@id='all_my_pets']/table/tbody/tr/td[1]")
@@ -53,6 +58,7 @@ def test_show_my_pets(testing):
 
     # all pets has different names
     expect(len(names) == len(names_set), 'Match of pet names')
+
     # all pets has different set of name, breed and age
     expect(pet_number == len(pets_list), 'Not all of pets has different set of name, breed and age')
 

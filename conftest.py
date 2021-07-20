@@ -8,7 +8,7 @@ from os import name as os_name
 
 @pytest.fixture
 def driver_args():
-    return ['--log-level=DEBUG']
+    return ['--log-level=3']
 
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
