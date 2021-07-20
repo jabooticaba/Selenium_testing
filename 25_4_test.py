@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
 def test_show_my_pets(testing):
     # add email
     testing.find_element_by_id('email').send_keys('test123@yandex.ru')
