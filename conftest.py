@@ -1,6 +1,5 @@
 import pytest
 import uuid
-import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from os import name as os_name
